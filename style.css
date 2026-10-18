@@ -37,33 +37,33 @@ h1 {
     background-color: #00b02d;
 }
 
-/* Griglia impostata a 4 colonne con immagini più grandi */
+/* Griglia a 4 colonne con altezze libere (senza crop) */
 .grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+    column-count: 4;
+    column-gap: 20px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* Regola per adattare la griglia sui dispositivi mobili/schermi piccoli */
+/* Adattamento per schermi più piccoli */
 @media (max-width: 900px) {
     .grid {
-        grid-template-columns: repeat(2, 1fr);
+        column-count: 2;
     }
 }
 
 @media (max-width: 500px) {
     .grid {
-        grid-template-columns: 1fr;
+        column-count: 1;
     }
 }
 
 .grid-item {
+    break-inside: avoid; /* Evita che un'immagine venga tagliata a metà tra una colonna e l'altra */
+    margin-bottom: 20px;
     background: #1e1e1e;
     border-radius: 8px;
     overflow: hidden;
-    aspect-ratio: 1 / 1; /* Mantiene le anteprime quadrate */
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -75,15 +75,14 @@ h1 {
 
 .grid-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: auto; /* Mantiene l'altezza proporzionale originale */
     display: block;
 }
 
 #loading {
-    grid-column: 1 / -1;
     text-align: center;
     font-size: 1.2rem;
     color: #888;
     margin-top: 50px;
+    grid-column: 1 / -1;
 }
