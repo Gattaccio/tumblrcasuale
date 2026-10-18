@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumblr Random Gallery - Pillolediuomo</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Le mie foto su Tumblr (Random)</h1>
+        <button id="shuffle-btn">🔄 Mescola foto</button>
+    </header>
+
+    <main>
+        <div class="grid" id="photo-grid">
+            <p id="loading">Caricamento delle foto in corso...</p>
+        </div>
+    </main>
+
+    <script>
+        let allPhotos = [];
+
+        // Funzione per mescolare l'array in modo casuale (Fisher-Yates)
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Carichiamo il file JSON generato dallo script Python
+        fetch('photos.json')
+            .then(response => response.json())
+            .then(data => {
+                allPhotos = data;
+                displayPhotos();
+            })
+            .catch(error => {
+                console.error('Errore nel caricamento del file photos.json:', error);
+                document.getElementById('loading').innerText = 'Errore nel caricamento delle foto. Assicurati di aver caricato il file photos.json!';
+            });
+
+        function displayPhotos() {
+            const grid = document.getElementById('photo-grid');
+            grid.innerHTML = ''; // Pulisci la griglia
+
+            // Mescoliamo le foto a ogni caricamento/click
+            const shuffled = shuffle([...allPhotos]);
+
+            // Mostriamo ad esempio le prime 100 foto casuali (puoi aumentare il numero se vuoi)
+            const photosToShow = shuffled.slice(0, 100);
+
+            photosToShow.forEach(photo => {
+                const item = document.createElement('div');
+                item.className = 'grid-item';
+
+                const link = document.createElement('a');
+                link.href = photo.post_url;
+                link.target = '_blank'; // Apre il post originale di Tumblr in una nuova scheda
+
+                const img = document.createElement('img');
+                img.src = photo.url;
+                img.loading = 'lazy'; // Ottimizza il caricamento delle immagini scorrendo la pagina
+                img.alt = 'Tumblr Photo';
+
+                link.appendChild(img);
+                item.appendChild(link);
+                grid.appendChild(item);
+            });
+        }
+
+        // Collega il pulsante "Mescola"
+        document.getElementById('shuffle-btn').addEventListener('click', displayPhotos);
+    </script>
+
+</body>
+</html>

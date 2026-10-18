@@ -1,0 +1,75 @@
+body {
+    background-color: #121212;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto 30px auto;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+#shuffle-btn {
+    background-color: #00cf35;
+    color: #121212;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#shuffle-btn:hover {
+    background-color: #00b02d;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.grid-item {
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+    aspect-ratio: 1 / 1; /* Rende le anteprime quadrate e ordinate */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.grid-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0,0,0,0.5);
+}
+
+.grid-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ritaglia l'immagine per riempire il quadrato in modo pulito */
+    display: block;
+}
+
+#loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 50px;
+}
